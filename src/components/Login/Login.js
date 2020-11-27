@@ -36,6 +36,7 @@ class Login extends Component {
                             name="email"
                             value={this.state.email}
                             onChange={this.handleValueChnage.bind(this)}
+                            required
                         />
                     </div>
 
@@ -48,6 +49,7 @@ class Login extends Component {
                             name="password"
                             value={this.state.password}
                             onChange={this.handleValueChnage.bind(this)}
+                            required
                         />
                     </div>
 
@@ -59,9 +61,6 @@ class Login extends Component {
                     </div>
 
                     <button type="submit" className="btn btn-primary btn-block">Submit</button>
-                    <p className="forgot-password text-right">
-                        Forgot <a href="#">password?</a>
-                    </p>
                 </form>
             </div>
         )
