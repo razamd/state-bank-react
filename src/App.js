@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 
 // core components
 import 'bootstrap/dist/css/bootstrap.css';
@@ -29,7 +29,11 @@ class App extends Component {
         const accesToken=localStorage.getItem('token');
         if(!accesToken){
             return(
-                <Login></Login>
+                <Router>
+                    <AuthRouting></AuthRouting>              
+                    <Redirect to="/login"/>
+                </Router>
+                
             )
         }
         else{
