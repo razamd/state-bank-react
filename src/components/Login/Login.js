@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {loginTo} from 'apiHandler/loginApiHandler'
+import { loginTo } from 'apiHandler/loginApiHandler.js'
 
 class Login extends Component {
     constructor(props) {
@@ -25,6 +25,7 @@ class Login extends Component {
     render() {
         return (
             <div class="d-flex justify-content-center">
+               
                 <form onSubmit={this.handleLoginSubmit.bind(this)}>
                     <h3>Login</h3>
                     <div className="form-group">
@@ -60,7 +61,14 @@ class Login extends Component {
                         </div>
                     </div>
 
-                    <button type="submit" className="btn btn-primary btn-block">Submit</button>
+                    <button type="submit" className="btn btn-primary btn-block">Submit</button><br></br>
+                    {
+                    this.props.error?
+                    <div className="alert alert-danger" role="alert">
+                        {this.props.error.message}
+                        <p>Incorrect credentials</p>
+                    </div>:''
+                    }
                 </form>
             </div>
         )
