@@ -12,6 +12,7 @@ class Users extends Component {
             username:'',
             email:'',
             password:'',
+            btn:'Save',
         }
     }
 
@@ -38,6 +39,7 @@ class Users extends Component {
             username:user.username,
             email:user.email,
             password:user.password,
+            btn:'Edit',
         })
     }
     handleSubmit(e){
@@ -113,7 +115,7 @@ class Users extends Component {
                         </div>
                         <div className="form-group">
                             <button type="submit" className="btn btn-primary">
-                                Save
+                                {this.state.btn}
                         </button>
                             <button type="button" className="btn btn-default"
                                 onClick={this.handleReset.bind(this)}>
