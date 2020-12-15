@@ -9,6 +9,8 @@ import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 
 import "assets/css/material-dashboard-react.css?v=1.9.0";
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 
 import { Provider } from "react-redux";
 import 'bootstrap/dist/css/bootstrap.css';

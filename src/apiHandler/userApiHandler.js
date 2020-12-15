@@ -25,6 +25,7 @@ export const createUser = (user) => {
             username: user.username,
             email: user.email,
             password:user.password,
+            roleId:user.roleId,
         };
 
         return (dispatch) => {
@@ -38,13 +39,14 @@ export const createUser = (user) => {
             username: user.username,
             email: user.email,
             password:user.password,
+            roleId:user.roleId,
         };
         return (dispatch) => {
             return axios.post(URL + 'user/create', data)
                 .then(response => {
                     console.log('response ', response)
                     const id = response.data._id;
-                    console.log('response ', response.data);
+                    console.log('response dataaaa ', response.data);
                     history.push('/admin/user');
 
                 }).catch(error => {
@@ -70,6 +72,7 @@ export const editUser = (data) => {
         username: data.username,
         email: data.email,
         password:data.password,
+        roleId:data.roleId,
     }
 
     return (dispatch) => {
@@ -119,8 +122,7 @@ export const fetchUsers = () => {
             .then(response => {
                 dispatch(fetchUsersSuccess(response.data.body));
                 console.log('users', response.data);
-                // isLoading = false;
-                // dispatch(fetchUsersLoading(isLoading));
+            
 
             }).catch(error => {
                 console.log('eror', error)

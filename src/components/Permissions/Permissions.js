@@ -1,40 +1,32 @@
+import { createPermission,deletePermission,fetchPermissions } from 'apiHandler/permissionApiHandler';
 import React, { Component } from 'react'
+import Permission from 'views/Permission/Permission';
 import { connect } from 'react-redux';
-import { fetchUsers, deleteUser, createUser } from 'apiHandler/userApiHandler'
-import User from 'views/User/User';
-import { Link } from 'react-router-dom';
-import { fetchRoles } from 'apiHandler/roleApiHandler';
 
-class Users extends Component {
+class Permissions extends Component {
     constructor(props) {
         super(props);
         this.state = {
             _id: 0,
             name: '',
-            username: '',
-            email: '',
-            password: '',
+            action: '',
+            url: '',
             btn: 'Save',
-            roleId: '',
-        }
-    }
 
+        }
+
+    }
     componentWillMount() {
         this.props.onFetch();
     }
-    handleEdit(user) {
+    handleEdit(permission) {
         this.setState({
-            _id: user._id,
-            name: user.name,
-            username: user.username,
-            email: user.email,
-            password: user.password,
-            roleId:user.roleId,
+            _id: permission._id,
+            name: permission.name,
+            action: permission.action,
+            url: permission.url,
             btn: 'Edit',
         })
-        if(user.roleId){
-            alert('Role name '+user.roleId.name)
-        }
     }
     handleSubmit(e) {
         e.preventDefault();
@@ -46,25 +38,18 @@ class Users extends Component {
             [e.target.name]: e.target.value,
         })
     }
-    handleRoleChange(e) {
-        this.setState({
-            roleId: e.target.value
-        })
-    }
     handleReset(e) {
         e.preventDefault();
         this.setState({
             _id: 0,
             name: '',
-            username: '',
-            email: '',
-            password: '',
-            roleId:'',
+            action: '',
+            url: '',
             btn:'Save',
 
         });
-
     }
+
     render() {
         return (
             <div>
@@ -85,44 +70,22 @@ class Users extends Component {
                             <input
                                 type="text"
                                 className="form-control"
-                                name="username"
-                                placeholder="Enter User Name"
+                                name="action"
+                                placeholder="Enter Action"
                                 required
-                                value={this.state.username}
+                                value={this.state.action}
                                 onChange={this.handleValueChnage.bind(this)}
                             />
                         </div>
                         <div className="form-group">
                             <input
-                                type="email"
+                                type="text"
                                 className="form-control"
-                                name="email"
-                                placeholder="Enter Email"
-                                value={this.state.email}
+                                name="url"
+                                placeholder="Enter URL"
+                                value={this.state.url}
                                 onChange={this.handleValueChnage.bind(this)}
                             />
-                        </div>
-                        <div className="form-group">
-                            <input
-                                type="password"
-                                className="form-control"
-                                name="password"
-                                placeholder="Enter Password"
-                                value={this.state.password}
-                                onChange={this.handleValueChnage.bind(this)}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <select class="form-control" onChange={this.handleRoleChange.bind(this)}>
-                                <option >Select Role</option>
-                                {
-                                    this.props.roles.map(role => {
-                                        return (
-                                            <option value={role._id}>{role.name}</option>
-                                        )
-                                    })
-                                }
-                            </select>
                         </div>
                         <div className="form-group">
                             <button type="submit" className="btn btn-primary">
@@ -131,34 +94,32 @@ class Users extends Component {
                             <button type="button" className="btn btn-default"
                                 onClick={this.handleReset.bind(this)}>
                                 Cancel
-                        </button>
+                    </button>
 
                         </div>
                     </form>
 
                 </div><br></br><br></br>
-                <Link to="/admin/user/create">Add new User</Link>
                 <table className="table table-striped" >
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>User Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
+                            <th>Action</th>
+                            <th>URL</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
 
-                            this.props.users.map(user => {
+                            this.props.permissions.map(permission => {
                                 return (
-                                    <User key={user._id}
-                                        user={user}
+                                    <Permission key={permission._id}
+                                        permission={permission}
                                         onEdit={this.handleEdit.bind(this)}
                                         onDelete={this.props.onDelete}
                                     >
-                                    </User>
+                                    </Permission>
                                 )
                             })
                         }
@@ -168,29 +129,24 @@ class Users extends Component {
             </div>
         )
     }
-
 }
 const mapStateToProps = (state) => {
     return {
-        users: state.usersData.users || [],
-        roles: state.rolesData.roles || [],
-        error: state.usersData.error || null,
-        isLoading: state.usersData.isLoading,
-
+        permissions: state.permissionsData.permissions || [],
     }
 }
-const mapeDistpatchToProps = (dispatch) => {
+const mapDistpatchToProps = (dispatch) => {
     return {
         onFetch: () => {
-            dispatch(fetchUsers());
-            dispatch(fetchRoles());
+            dispatch(fetchPermissions())
         },
+
         onDelete: (id) => {
-            dispatch(deleteUser(id));
+            dispatch(deletePermission(id));
         },
-        onAdd: (user) => {
-            dispatch(createUser(user));
+        onAdd: (permission) => {
+            dispatch(createPermission(permission));
         }
     }
 }
-export default connect(mapStateToProps, mapeDistpatchToProps)(Users);
+export default connect(mapStateToProps, mapDistpatchToProps)(Permissions);

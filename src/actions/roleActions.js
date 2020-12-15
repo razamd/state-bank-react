@@ -14,6 +14,8 @@ export const FETCH_ROLE_ERROR = 'FETCH_ROLE_ERROR';
 export const FETCH_ROLE_LOADING = 'FETCH_ROLE_LOADING';
 export const FETCH_ROLE_SUCCESS = 'FETCH_ROLE_SUCCESS';
 
+export const VIEWS_ROLE_SUCCESS = 'VIEWS_ROLE_SUCCESS';
+
 //CREATE ACTION METHODS
 export const createRoleSuccess = (data) => {
     return {
@@ -75,4 +77,11 @@ export const fetchRolesError = (data) => {
         type: FETCH_ROLE_ERROR,
         payload: data,
     };
+}
+//VIEWS ACTION METHODS
+export const viewsRolesSuccess = (data) => {
+    return {
+        type: VIEWS_ROLE_SUCCESS,
+        payload: data,
+    }
 }

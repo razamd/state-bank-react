@@ -10,11 +10,13 @@ import {
     DELETE_ROLE_SUCCESS,
     FETCH_ROLE_ERROR,
     FETCH_ROLE_LOADING,
-    FETCH_ROLE_SUCCESS
+    FETCH_ROLE_SUCCESS,
+    VIEWS_ROLE_SUCCESS
 } from '../actions/roleActions';
 
 const defaultState = {
     roles: [],
+    views:[],
     error: null,
     isLoading: false,
 }
@@ -41,6 +43,8 @@ const roleReducer = (state = defaultState, action) => {
             return { ...state, isLoading: action.payload }
         case FETCH_ROLE_ERROR:
             return { ...state, error: action.payload }
+        case VIEWS_ROLE_SUCCESS:
+            return { ...state, views: action.payload }
 
 
         default:

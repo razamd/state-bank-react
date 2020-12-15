@@ -10,11 +10,12 @@ import {
     deleteRoleError,
     fetchRolesLoading,
     fetchRolesError,
-    fetchRolesSuccess
+    fetchRolesSuccess,
+    viewsRolesSuccess
 } from '../actions/roleActions'
 
 
-// CREATE-------------------------------------------
+// CREATE------------------------------------------- 
 
 export const createRole = (role) => {
     if (role._id) {
@@ -24,7 +25,6 @@ export const createRole = (role) => {
             description: role.description,
             displayName: role.displayName,
         };
-
         return (dispatch) => {
             dispatch(editRole(data));
         }
@@ -35,6 +35,7 @@ export const createRole = (role) => {
             name: role.name,
             description: role.description,
             displayName: role.displayName,
+            permissions: role.permissions,
         };
         return (dispatch) => {
             return axios.post(URL+'role/create', data)
@@ -43,11 +44,10 @@ export const createRole = (role) => {
                     const id = response.data._id;
                     console.log('response ', response.data);
                     dispatch(createRoleSuccess(response.data));
-                    history.push('/role');
+                    history.push('/admin/role');
                     
                 }).catch(error => {
                     console.log(error)
-                    alert('errorrr')
                     const errorPayload = {};
                     dispatch(createRoleError(errorPayload))
 
@@ -68,14 +68,13 @@ export const editRole = (data) => {
         description: data.description,
         displayName: data.displayName,
     }
-
     return (dispatch) => {
         return axios.post(URL+'role/update/'+id, updateData)
             .then(() => {
                 return axios.get(URL+'role/view/'+id)
                     .then(response => {
                         dispatch(editRoleSuccess(response.data));
-                        history.push('/role')
+                        history.push('/admin/role')
 
                     }).catch(error => {
                         const errorPayload = {};
@@ -84,6 +83,7 @@ export const editRole = (data) => {
                     });
 
             }).catch((error) => {
+                alert('erorrrrrrr')
                 console.log('errorr ',error)
             })
     }
@@ -96,7 +96,7 @@ export const deleteRole = (id) => {
         return axios.get(URL+'role/delete/'+id)
             .then(() => {
                 dispatch(deleteRoleSuccess(id));
-                history.push('/role')
+                history.push('/admin/role')
 
             }).catch((error) => {
                 console.log('error',error);
@@ -119,6 +119,21 @@ export const fetchRoles = () => {
                 isLoading = false;
                 dispatch(fetchRolesLoading(isLoading));
 
+            }).catch(error => {
+                console.log('eror',error)
+
+            })
+    };
+}
+//FETCH with pagination--------------------------------------------------------------
+
+export const fetchRolesWithPagination = (data) => {
+    console.log(URL);
+    return (dispatch) => {
+        return axios.post(URL+'role/views',data)
+            .then(response => {
+                dispatch(viewsRolesSuccess(response.data));              
+                console.log('roles with paigination ',response.data);
             }).catch(error => {
                 console.log('eror',error)
 

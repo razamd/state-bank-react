@@ -21,11 +21,11 @@ class Login extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
+        
     }
     render() {
         return (
             <div class="d-flex justify-content-center">
-               
                 <form onSubmit={this.handleLoginSubmit.bind(this)}>
                     <h3>Login</h3>
                     <div className="form-group">
@@ -65,8 +65,7 @@ class Login extends Component {
                     {
                     this.props.error?
                     <div className="alert alert-danger" role="alert">
-                        {this.props.error.message}
-                        <p>Incorrect credentials</p>
+                        <p>{this.props.error.error}</p>
                     </div>:''
                     }
                 </form>

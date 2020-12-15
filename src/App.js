@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 
 // core components
 import 'bootstrap/dist/css/bootstrap.css';
-import Login from "components/Login/Login";
 import AuthRouting from 'routing/AuthRouting';
 import UserRouting from 'routing/UserRouting';
+import PermissionRouting from 'routing/PermissionRouting';
 
 class App extends Component {
     constructor(props) {
@@ -40,7 +40,8 @@ class App extends Component {
             return (
                 <Router>
                     <AuthRouting></AuthRouting>
-                    <UserRouting></UserRouting>                  
+                    <UserRouting></UserRouting>
+                    <PermissionRouting></PermissionRouting>                  
                 </Router>
             )
 

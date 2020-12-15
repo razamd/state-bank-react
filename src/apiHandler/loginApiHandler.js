@@ -17,12 +17,9 @@ export const loginTo = (login) => {
                 const data = response.data;
                 const token = data.token;
                 console.log(data)
-                if (data.success == false) {
+                if (data.success===false) {
                     const errorPayload = {};
-
-                    errorPayload['message'] = response.data.message;
-                    errorPayload['status'] = response.data.status;
-
+                    errorPayload['error'] = data.error;
                     dispatch(loginError(errorPayload))
                 }
                 localStorage.setItem('token', token)
@@ -31,13 +28,6 @@ export const loginTo = (login) => {
                 }
             }).catch(error => {
                 console.log('Error', error.response)
-                const errorPayload = {};
-
-                errorPayload['message'] = error.response.data.message;
-                errorPayload['status'] = error.response.data.status;
-
-                dispatch(loginError(errorPayload))
-
             });
     }
 }
